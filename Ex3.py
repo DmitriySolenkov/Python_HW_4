@@ -19,7 +19,7 @@ def enter_menu():
         res = input()
         try:
             num = int(res)
-            if (num <= 0 or num > 3):
+            if (num <= 0 or num > 4):
                 print("Incorrect enter!")
             else:
                 return num
@@ -49,9 +49,11 @@ def withdraw(balance):
     comis = round(comission(sum), 2)
     print("Your cash:", sum, "$")
     print("Your comission:", comis, "$")
+    notes.append(-sum)
+    notes.append(-comis)
     return (balance-sum-comis)
 
-
+notes=[]
 balance = 0
 count = 0
 while (True):
@@ -61,14 +63,18 @@ while (True):
         print("Your wealth tax is", tax, "$")
         balance = round(balance-tax, 2)
     print("-------------------------------\nYour balance:", balance, "$")
-    print("Enter 1 to deposit money,\nEnter 2 to withdraw money,\nEnter 3 to exit:")
+    print("Enter 1 to deposit money,\nEnter 2 to withdraw money,\nEnter 3 to check notes,\nEnter 4 to exit:")
     menu = enter_menu()
     match menu:
         case 1:
-            balance += enter_sum()
+            deposit=enter_sum()
+            balance += deposit
+            notes.append(balance)
         case 2:
             balance = withdraw(balance)
         case 3:
+            print(notes)
+        case 4:
             print("Application closed")
             break
     count += 1
@@ -78,3 +84,4 @@ while (True):
             bonus = round((balance/100*3), 2)
             print("This is your third operation! You get bonus:", bonus, "$")
             balance += bonus
+            notes.append(bonus)
